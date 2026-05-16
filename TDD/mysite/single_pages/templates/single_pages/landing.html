@@ -1,20 +1,61 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "blog/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>장고로 TDD</title>
-</head>
+{% block head_title %}
+    Home - KMU Django
+{% endblock %}
 
-<body>
-    <nav></nav>
-        <ul>
-            <li><a href="/">Blog</a></li>
-            <li><a href="/about_me/">About Me</a></li>
+{% block main_area %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">Welcome to KMU Django Project</h1>
+            <p class="card-text text-muted">
+                블로그 실습 프로젝트의 대문 페이지입니다. 포스트, 카테고리, 태그 기능을 한눈에 확인할 수 있습니다.
+            </p>
+            <a href="/blog/" class="btn btn-primary">블로그 보러가기</a>
+            <a href="/about_me/" class="btn btn-outline-secondary">자기소개 보기</a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Posts</h5>
+                    <p class="display-4 mb-0">{{ post_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="display-4 mb-0">{{ category_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Tags</h5>
+                    <p class="display-4 mb-0">{{ tag_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Recent Posts
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for post in recent_posts %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    <small class="text-muted">{{ post.created_at }}</small>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-muted">아직 게시물이 없습니다.</li>
+            {% endfor %}
         </ul>
-    </nav>
-    <h1>안녕하세요!</h1>
-    <h2>대문 만드는 중</h2>
-</body>
-
-</html>
+    </div>
+{% endblock %}
